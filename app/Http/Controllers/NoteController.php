@@ -33,7 +33,8 @@ class NoteController extends Controller
         
 
         $note->save();
-        return redirect()->route('note.index');
+        return redirect()->route('note.index')->with('success', 'Note created');
+        //with es para pasarle el mensaje cuando redirija a la vista.
     }
 
     public function edit($note): View{
@@ -44,7 +45,8 @@ class NoteController extends Controller
     public function update(NoteRequest $request, Note $note): RedirectResponse{ //si el parametro fuera Note $note no funcionaria, laravel no reconoce automaticamente el modelo si tiene otro nombre ya que en el enrutador le dije que recibiria {id}
         //con Note $note, nos ahorramos pasar por parametro el id y buscarlo en una linea de codigo.
         $note->update($request->all()); //con request->all nos ahorramos de como hice en create obtener cada input, pero esto solo se puede hacer cuando el name de los input es igual al de los campos de la tabla
-        return redirect()->route('note.index');
+        return redirect()->route('note.index')->with('success', 'Note updated');
+        //with es para pasarle el mensaje cuando redirija a la vista.
     }
 
     public function show(Note $note): View{
@@ -53,6 +55,6 @@ class NoteController extends Controller
 
     public function delete(Note $note): RedirectResponse{
         $note->delete();
-        return redirect()->route('note.index');
+        return redirect()->route('note.index')->with('danger', 'Note deleted');
     }
 }
